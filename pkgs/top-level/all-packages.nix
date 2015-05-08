@@ -5028,6 +5028,7 @@ let
   #         CCACHE_DIR=/bin/.ccache
   #       '';
   #     };
+  #   };
   #
   ccacheWrapper = makeOverridable ({ extraConfig ? "" }:
      wrapCC (ccache.links extraConfig)) {};
@@ -5124,7 +5125,7 @@ let
   #       extraConfig = ''
   #         DISTCC_HOSTS="myhost1 myhost2"
   #       '';
-  #     };
+  #     };}
   #
   distccWrapper = makeOverridable ({ extraConfig ? "" }:
      wrapCC (distcc.links extraConfig)) {};
