@@ -160,10 +160,11 @@ composableDerivation {
       // edf "carbon_check" "carbon_check" { } #If auto-select GUI, check for Carbon default=yes
       // edf "gtktest" "gtktest" { } #Do not try to compile and run a test GTK program
     */
+  _cleanInputs = builtins.filter (x: builtins.isAttrs x || builtins.isString x) buildInputs;
 
   postInstall = stdenv.lib.optionalString stdenv.isLinux ''
     patchelf --set-rpath \
-      "$(patchelf --print-rpath $out/bin/vim):${lib.makeLibraryPath buildInputs}" \
+      "$(patchelf --print-rpath $out/bin/vim):${lib.makeLibraryPath _cleanInputs}" \
       "$out"/bin/{vim,gvim}
 
     ln -sfn '${nixosRuntimepath}' "$out"/share/vim/vimrc
