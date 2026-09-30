@@ -152,7 +152,6 @@ in
           plasma-browser-integration
           plasma-workspace-wallpapers
           konsole
-          kwin-x11
           (lib.getBin qttools) # Expose qdbus in PATH
           ark
           elisa

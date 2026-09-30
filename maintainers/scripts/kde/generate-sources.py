@@ -73,7 +73,11 @@ def to_sri(hash):
     type=str,
     default=None,
 )
-def main(pkgset: str, version: str, nixpkgs: pathlib.Path, sources_url: str | None):
+@click.option(
+    "--unstable",
+    is_flag=True,
+)
+def main(pkgset: str, version: str, nixpkgs: pathlib.Path, sources_url: str | None, unstable: bool):
     root_dir = nixpkgs / "pkgs/kde"
     set_dir = root_dir / pkgset
     generated_dir = root_dir / "generated"
@@ -85,7 +89,7 @@ def main(pkgset: str, version: str, nixpkgs: pathlib.Path, sources_url: str | No
             "gear": f"release-service/{version}/src/",
             "plasma": f"plasma/{version}/",
         }[pkgset]
-        sources_url = f"https://download.kde.org/stable/{set_url}"
+        sources_url = f"https://download.kde.org/{'un' if unstable else ''}stable/{set_url}"
 
     client = httpx.Client()
     sources = client.get(sources_url)
